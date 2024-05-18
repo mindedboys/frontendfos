@@ -1,0 +1,43 @@
+export const topMeal=[
+    {
+        image:"https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg",
+        title:"Pizza"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2020/10/05/19/55/hamburger-5630646_1280.jpg",
+        title:"Burger"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/12/17/01/31/food-7660777_1280.jpg",
+        title:"Noodle"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2016/11/29/04/00/bread-1867208_1280.jpg",
+        title:"Sandwiche"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2021/02/21/18/15/biriyani-6037375_1280.jpg",
+        title:"Biriyani"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2024/04/21/18/43/ai-generated-8711270_1280.jpg",
+        title:"Cake"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/02/21/03/38/manchurian-7025656_1280.jpg",
+        title:"Manchurian"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2017/02/15/16/49/dosa-2069313_1280.jpg",
+        title:"Dosa"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2024/02/04/20/02/ai-generated-8553026_1280.jpg",
+        title:"Samosa"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2021/05/31/01/10/fried-rice-6297407_1280.jpg",
+        title:"Fried-rice"
+    },
+]
+
