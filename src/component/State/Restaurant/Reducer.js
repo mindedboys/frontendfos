@@ -20,7 +20,9 @@ export const restaurantReducer = (state = initialState, action) => {
         case actionTypes.UPDATE_RESTAURANT_REQUEST:
         case actionTypes.GET_RESTAURANT_BY_ID_REQUEST:
         case actionTypes.CREATE_CATEGORY_REQUEST:
+        case actionTypes.GET_ALL_CATEGORY_REQUEST:
         case actionTypes.GET_RESTAURANTS_CATEGORY_REQUEST:
+        case actionTypes.DELETE_CATEGORY_REQUEST:  
           return {
             ...state,
             loading:true,
@@ -96,21 +98,40 @@ export const restaurantReducer = (state = initialState, action) => {
                 ...state,
                 loading:false,
                 categories:[...state.categories,action.payload],             
-              };   
+              };
+        
+        case actionTypes.GET_ALL_CATEGORY_SUCCESS:
+            return {
+                    ...state,
+                    loading:false,
+                    categories:action.payload
+                  }; 
+              
         case actionTypes.GET_RESTAURANTS_CATEGORY_SUCCESS:
             return {
                 ...state,
                 loading:false,
                 categories:action.payload,             
               };
+        case actionTypes.DELETE_CATEGORY_SUCCESS:      
+              return{
+                  ...state,
+                  loading:false,
+                  categories:state.categories.filter((item)=>
+                  item.id !== action.payload
+                  ),
+              };
+
         case actionTypes.CREATE_RESTAURANT_FAILURE:
         case actionTypes.GET_ALL_RESTAURANTS_FAILURE:
         case actionTypes.DELETE_RESTAURANT_FAILURE:
         case actionTypes.UPDATE_RESTAURANT_FAILURE:
         case actionTypes.GET_RESTAURANT_BY_ID_FAILURE:
         case actionTypes.CREATE_EVENTS_FAILURE:
-        case actionTypes.CREATE_CATEGORY_FAILURE:                            
+        case actionTypes.CREATE_CATEGORY_FAILURE:
+        case actionTypes.GET_ALL_CATEGORY_FAILURE:                            
         case actionTypes.GET_RESTAURANTS_CATEGORY_FAILURE:
+        case actionTypes.DELETE_CATEGORY_FAILURE:  
             return {
                 ...state,
                 loading:false,

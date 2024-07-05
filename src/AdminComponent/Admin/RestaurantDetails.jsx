@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -6,23 +6,40 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import XIcon from '@mui/icons-material/X';
 import { useDispatch, useSelector } from "react-redux";
 import { updateRestaurantStatus } from "../../component/State/Restaurant/Actions";
+import ClipLoader from "react-spinners/ClipLoader";
+
+
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
 
 
 export const RestaurantDetails = () => {
+const [loading, setLoading] = useState(false);
 const {restaurant} = useSelector((store) =>store)
 const dispatch = useDispatch()
 
 
-const handleRestaurantStatus = () =>{
+const handleRestaurantStatus = async () =>{
+    setLoading(true);
+    setTimeout(()=>{    
 dispatch(updateRestaurantStatus({
     restaurantId:restaurant.usersRestaurant.id,
     jwt:localStorage.getItem("jwt")
-}))
+  }))
+setLoading(false);
+},800)
 }
 
 
 
 return (
+    <div>
+         {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <div className='lg:px-20 px-5 pb-10'>
             <div className='py-5 flex justify-center items-center gap-5'>
                 <h1 className='text-2xl lg:text-7xl text-center font-bold p-5'>{restaurant.usersRestaurant?.name}</h1>
@@ -90,31 +107,38 @@ return (
                         <CardContent>
                             <div className="space-y-4 text-gray-200">
                                 <div className="flex">
-                                        <p className="w-48">Country</p>
+                                        <p className="w-48">Street Address</p>
                                         <p className="text-gray-400">
                                             <span className="pr-5">-</span>
-                                            code with Zosh
+                                            {restaurant.usersRestaurant?.address?.streetAddress}
                                         </p>
                                 </div>
                                 <div className="flex">
                                         <p className="w-48">City</p>
                                         <p className="text-gray-400">
                                             <span className="pr-5">-</span>
-                                            code with Zosh
+                                            {restaurant.usersRestaurant?.address?.city}
+                                        </p>
+                                </div>
+                                <div className="flex">
+                                        <p className="w-48">State</p>
+                                        <p className="text-gray-400">
+                                            <span className="pr-5">-</span>
+                                            {restaurant.usersRestaurant?.address?.state}
                                         </p>
                                 </div>
                                 <div className="flex">
                                         <p className="w-48">Postal Code</p>
                                         <p className="text-gray-400">
                                             <span className="pr-5">-</span>
-                                            code with Zosh
+                                            {restaurant.usersRestaurant?.address?.postalCode}
                                         </p>
                                 </div>
                                 <div className="flex">
-                                        <p className="w-48">Street Address</p>
+                                        <p className="w-48">Country</p>
                                         <p className="text-gray-400">
                                             <span className="pr-5">-</span>
-                                            code with Zosh
+                                            {restaurant.usersRestaurant?.address?.country}
                                         </p>
                                 </div>
                             </div>
@@ -163,8 +187,9 @@ return (
                     </Card>
                 </Grid>
             </Grid>        
-
         </div>
+        }
+     </div>          
     )
 }
 

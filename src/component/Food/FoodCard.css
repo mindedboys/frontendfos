@@ -1,0 +1,20 @@
+
+.FoodCard .textPart{
+    transition: transform .3s ease-out; 
+}
+.textPart .h3 {
+    text-align: right;
+    font-size: small;
+  }
+  h1 {
+    text-align: left;
+    font-size: larger;
+  }
+
+  
+.FoodCard:hover .textPart{
+    transform: translateY(-1rem);
+}
+.FoodCard:hover{
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}    

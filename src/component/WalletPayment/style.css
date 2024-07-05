@@ -1,0 +1,28 @@
+/* HIDE RADIO */
+[type=radio] { 
+    position: absolute;
+    opacity: 5;
+    width: 5;
+    height: 5;
+  }
+  
+  /* IMAGE STYLES */
+  [type=radio] + img {
+    cursor: pointer;
+  }
+  
+  /* CHECKED STYLES */
+  [type=radio]:checked + img {
+    outline: 5px solid rgb(233, 8, 147);
+  }
+.textPart{
+    transition: transform .3s ease-out; 
+}
+.textPart .h3 {
+    text-align: right;
+    font-size: small;
+  }
+  h1 {
+    text-align: left;
+    font-size: larger;
+  }

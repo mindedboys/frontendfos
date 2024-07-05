@@ -7,6 +7,9 @@ import{
     DELETE_MENU_ITEM_FAILURE,
     DELETE_MENU_ITEM_REQUEST,
     DELETE_MENU_ITEM_SUCCESS,
+    GET_ALL_MENU_FAILURE,
+    GET_ALL_MENU_REQUEST,
+    GET_ALL_MENU_SUCCESS,
     GET_MENU_ITEMS_BY_RESTAURANT_ID_FAILURE,
     GET_MENU_ITEMS_BY_RESTAURANT_ID_REQUEST,
     GET_MENU_ITEMS_BY_RESTAURANT_ID_SUCCESS,
@@ -68,13 +71,13 @@ export const searchMenuItem = ({keyword, jwt}) =>{
     return async (dispatch) =>{
         dispatch({type:SEARCH_MENU_ITEM_REQUEST});
      try{
-        const { data } = await api.get(`api/food/search?name/${keyword}`,{
+        const response = await api.get(`/api/food/search?keyword=${keyword}`,{
             headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
         });
-     console.log("search menu by item ",data);
-     dispatch({type:SEARCH_MENU_ITEM_SUCCESS,payload:data});
+     console.log("search menu by item ",response.data);
+     dispatch({type:SEARCH_MENU_ITEM_SUCCESS,payload:response.data});
        
      }   
      catch(error){
@@ -83,6 +86,26 @@ export const searchMenuItem = ({keyword, jwt}) =>{
      }
    };
 };
+
+export const getAllFoodAction = (token) =>{
+   return async (dispatch) =>{
+       dispatch({type:GET_ALL_MENU_REQUEST});
+    try{
+       const{ data } = await api.get("/api/food/all", {
+           headers: {
+                Authorization: `Bearer ${token}`,   
+           },
+       });
+    dispatch({type:GET_ALL_MENU_SUCCESS,payload:data});
+    console.log("all food",data);   
+    }   
+    catch(error){
+       console.log("catch error",error)
+       dispatch({type:GET_ALL_MENU_FAILURE,payload:error});
+    }
+  };
+};
+
 
 /*export const getAllIngredientsOfMenuItem = (reqData) =>{
     return async (dispatch) =>{

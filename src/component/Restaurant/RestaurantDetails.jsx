@@ -8,14 +8,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getRestaurantById, getRestaurantsCategory } from "../State/Restaurant/Actions";
 import { getMenuItemsByRestaurantId } from "../State/Menu/Action";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
-/*const categories=[
-    "Pizza",
-    "Burger",
-    "Rice",
-    "Dosa"
-]*/
+
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
 
 
 
@@ -27,9 +30,10 @@ const foodTypes = [
 ];
 
 
-//const Menu = [1,1,1,1,1,1,1];
+
 
 const RestaurantDetails = () => {
+    const [loading, setLoading] = useState(false);
     const [foodType, setFoodType] = useState ("all")
     const navigate = useNavigate()
     const dispatch =useDispatch();
@@ -38,37 +42,46 @@ const RestaurantDetails = () => {
     const [selectedCategory,setSelectedCategory]=useState("");
     const{id,city} = useParams();
 
-    console.log("restaurant",restaurant)
-    useEffect (()=>{
-        dispatch(getRestaurantById({jwt,restaurantId:id}))
-        dispatch(getRestaurantsCategory({jwt,restaurantId:id}))        
-    },[]);
+
+useEffect (()=>{
+    setLoading(true);
+    setTimeout(()=>{
+        dispatch(getRestaurantById({jwt,restaurantId:id}))    
+        dispatch(getRestaurantsCategory({jwt,restaurantId:id}))
+    setLoading(false);
+    },800)                
+},[]);
+
 
 useEffect(()=>{
-    dispatch(
-        getMenuItemsByRestaurantId({
-        jwt,
-        restaurantId:id,
-        vegetarian:foodType==="vegetarian",
-        nonveg:foodType==="non_vegetarian",
-        seasonal:foodType==="seasonal", 
-        foodCategory:selectedCategory
-    }));
+       dispatch(
+          getMenuItemsByRestaurantId({
+            jwt,
+            restaurantId:id,
+            vegetarian:foodType==="vegetarian",
+            nonveg:foodType==="non_vegetarian",
+            seasonal:foodType==="seasonal", 
+            foodCategory:selectedCategory
+         }));
 },[selectedCategory,foodType])
 
 
-const handleFilter=(e) =>{
-    setFoodType(e.target.value) 
+const handleFilter = async(e)=>{
+    await setFoodType(e.target.value) 
     console.log(e.target.value,e.target.name)
 }
 
-const handleFilterCategory=(e,value) =>{ 
-    setSelectedCategory(value)
+
+const handleFilterCategory = async(e,value) =>{ 
+    await setSelectedCategory(value)
     console.log(e.target.value,e.target.name,value)
 }
 
-    return(
-        <div className='px-5 lg:px-20'>
+
+return(
+   <>
+     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> : 
+    <div className='px-5 lg:px-20'>
             <section>
                  <h3 className='text-gray-500 py-2 mt-10'></h3>
                  <div>
@@ -95,15 +108,25 @@ const handleFilterCategory=(e,value) =>{
                     <p className="text-gray-500 flex item-center gap-3 ">
                         <LocationOnIcon/>
                         <span>
-                                Ujjain, Madhya Paredesh-450002 
+                        <div>{restaurant.restaurant?.address.streetAddress} , </div>
+                        <div>{restaurant.restaurant?.address.city} ,
+                        {restaurant.restaurant?.address.state} -
+                        {restaurant.restaurant?.address.postalCode} </div>
+                        <div>{restaurant.restaurant?.address.country} </div>
                         </span>
                     </p>
                     <p className="text-gray-500 flex item-center gap-3 mt-2">
                         <CalendarTodayIcon/>
                         <span>
-                            Mon-Sun: 9:00 AM - 11:00PM(Today)
+                        {restaurant.restaurant?.openingHours}
                         </span>
                     </p>
+                    <p className="text-gray-400 flex item-center gap-3 mt-3">
+                        <span className="pr-1">Status-:</span>
+                            {restaurant.restaurant?.open?<span className="px-3 py-1 rounded-full bg-green-400
+                                text-gray-950">Open</span>:<span className="px-3 py-1 rounded-full bg-red-400
+                                text-gray-950">Closed</span>}
+                        </p>
                     </div>
                  </div>
             </section>
@@ -147,13 +170,12 @@ const handleFilterCategory=(e,value) =>{
             </div>
 
             <div className="space-y-5 lg:w-[80%] lg:pl-10"> 
-{menu.menuItems.map((item) => <MenuCard  item={item} />)}            
+{menu.menuItems.map((item) => <MenuCard  item={item} />)}
             </div>
-
           </section>
-
         </div>
-
+       }
+     </>
     );
 };
 

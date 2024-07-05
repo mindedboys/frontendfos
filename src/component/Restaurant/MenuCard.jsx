@@ -1,35 +1,43 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, FormGroup } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from "react";
-import { category } from "@mui/icons-material";
+import { Restaurant, category } from "@mui/icons-material";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import categorizeIngredients from "../Util/categrizeIngredients";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../State/Cart/Action";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
-/*const demo =[
-    { Category:"Nuts & seeds", ingredients:["Cashews"]},
-    { Category:"Protein", ingredients:["Ground beef","Bacon strips"]},
-    { Category:"Grated", ingredients:["Shredded Cheese"]}
-]*/
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
+
 
 const MenuCard = ({item}) => {
+    const [loading, setLoading] = useState(false);
     const [selectedIngredients,setSelectedIngredients]=useState([])
+    const {auth,restaurant,menu}=useSelector(store => store)
     const dispatch = useDispatch();
-const handleCheckBoxchange = (itemName)=>{ 
-    console.log("value",itemName);
+
+
+const handleCheckBoxchange = async (itemName)=>{ 
     if(selectedIngredients.includes(itemName)){
-        setSelectedIngredients(
+       await setSelectedIngredients(
             selectedIngredients.filter((item) =>item!==itemName))
-    }
+           }
     else{
-        setSelectedIngredients([...selectedIngredients,itemName])
+        await setSelectedIngredients([...selectedIngredients,itemName])
     }
 };
 
-const handleAddItemToCart = (e) =>{
+
+const handleAddItemToCart = async(e) =>{
     e.preventDefault()
     const reqData = {
         token:localStorage.getItem("jwt"),
@@ -39,19 +47,24 @@ const handleAddItemToCart = (e) =>{
             ingredients:selectedIngredients,
         },
     };
-   dispatch(addItemToCart(reqData)) 
-  console.log("req data",reqData)  
+    setLoading(true);
+    setTimeout(()=>{
+        dispatch(addItemToCart(reqData))   
+    setLoading(false);
+    },800)    
 };
 
 
-    return (
+return (
+    <>
+     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <div className='lg:flex items-center justify-between'>
+          <div className='lg:flex items-center justify-between box'>
           <div className='lg:flex items-center lg:gap-5'>
             <img className='w-[7rem] h-[7rem] object-cover' 
             src={item.images[0]} alt="" />
@@ -90,10 +103,12 @@ const handleAddItemToCart = (e) =>{
                     <div className="pt-5">
                        <Button variant="contained"  disabled={false} type="submit">{true?"Add to Cart":"Out of Stock" }</Button>
                     </div>
-                </div>
+                </div>    
             </form>
         </AccordionDetails>
-    </Accordion>    
+    </Accordion>
+        }
+    </>
     )
 }
 

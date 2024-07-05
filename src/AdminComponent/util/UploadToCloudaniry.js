@@ -11,8 +11,8 @@ export const uploadImageToCloudinary = async(file) =>{
 
     const res = await fetch(api_url,{
         method:"post",
-        body:data
-    })
+        body:data 
+    });
     const fileData = await res.json();
     console.log(fileData);
     return fileData.url 

@@ -7,13 +7,15 @@ const initialState = {
     loading: false,
     error: null,
     search: [],
-    message: null
+    message: null,
+    foods:[]
 }
 
 const menuItemReducer = (state = initialState, action) =>{
     switch(action.type){
         case actionTypes.CREATE_MENU_ITEM_REQUEST:
         case actionTypes.GET_MENU_ITEMS_BY_RESTAURANT_ID_REQUEST:
+        case actionTypes.GET_ALL_MENU_REQUEST:
         case actionTypes.DELETE_MENU_ITEM_REQUEST:
         case actionTypes.SEARCH_MENU_ITEM_REQUEST:
         case actionTypes.UPDATE_MENU_ITEMS_AVAILABILITY_REQUEST:
@@ -30,6 +32,13 @@ const menuItemReducer = (state = initialState, action) =>{
                 menuItems: [...state.menuItems, action.payload],
                 message: "Food Created Successfully"
             };
+        case actionTypes.GET_ALL_MENU_SUCCESS:
+            return {
+                    ...state,
+                    loading:false,
+                    search:action.payload,
+                    foods:action.payload
+                  };    
 
         case actionTypes.GET_MENU_ITEMS_BY_RESTAURANT_ID_SUCCESS:
             return{
@@ -60,6 +69,7 @@ const menuItemReducer = (state = initialState, action) =>{
       
     case actionTypes.CREATE_MENU_ITEM_FAILURE:
     case actionTypes.GET_MENU_ITEMS_BY_RESTAURANT_ID_FAILURE:
+    case actionTypes.GET_ALL_MENU_FAILURE:
     case actionTypes.DELETE_MENU_ITEM_FAILURE:
     case actionTypes.SEARCH_MENU_ITEM_FAILURE:
     case actionTypes.UPDATE_MENU_ITEMS_AVAILABILITY_FAILURE:                        

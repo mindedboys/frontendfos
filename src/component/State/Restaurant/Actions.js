@@ -37,7 +37,13 @@ import{
     UPDATE_RESTAURANT_REQUEST,
     DELETE_RESTAURANT_REQUEST,
     DELETE_RESTAURANT_SUCCESS,
-    DELETE_RESTAURANT_FAILURE
+    DELETE_RESTAURANT_FAILURE,
+    DELETE_CATEGORY_REQUEST,
+    DELETE_CATEGORY_SUCCESS,
+    DELETE_CATEGORY_FAILURE,
+    GET_ALL_CATEGORY_REQUEST,
+    GET_ALL_CATEGORY_SUCCESS,
+    GET_ALL_CATEGORY_FAILURE
 } from "./ActionTypes";
 
 export const getAllRestaurantsAction = (token) =>{
@@ -181,10 +187,12 @@ export const createEventAction = ({data, jwt, restaurantId}) =>{
     return async (dispatch) =>{
         dispatch({type:CREATE_EVENTS_REQUEST});
      try{
-        const res = await api.post(`/api/admin/events/restaurant/${restaurantId}`,data, {
-            headers: {
+        const res = await api.post(`/api/admin/event/restaurant/${restaurantId}`,data, {
+            
+         headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
+            
         });
 
      dispatch({type:CREATE_EVENTS_SUCCESS,payload:res.data});
@@ -201,7 +209,7 @@ export const getAllEvents = ({jwt}) =>{
     return async (dispatch) =>{
         dispatch({type:GET_ALL_EVENTS_REQUEST});
      try{
-        const res = await api.get("api/events", {
+        const res = await api.get("/api/event/restaurant", {
             headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
@@ -220,7 +228,7 @@ export const deleteEventAction = ({eventId, jwt}) =>{
     return async (dispatch) =>{
         dispatch({type:DELETE_EVENTS_REQUEST});
      try{
-        const res = await api.delete(`api/admin/events${eventId}`,{
+        const res = await api.delete(`/api/admin/event/restaurant/${eventId}`,{
             headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
@@ -239,7 +247,7 @@ export const getRestaurantsEvents = ({restaurantId, jwt}) =>{
     return async (dispatch) =>{
         dispatch({type:GET_RESTAURANTS_EVENTS_REQUEST});
      try{
-        const res = await api.get(`/api/admin/events/restaurant/${restaurantId}`, {
+        const res = await api.get(`/api/event/restaurant/${restaurantId}`, {
             headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
@@ -293,4 +301,42 @@ export const getRestaurantsCategory = ({restaurantId, jwt}) =>{
    };
 };
 
+export const getAllCategoryAction = (token) =>{
+   return async (dispatch) =>{
+       dispatch({type:GET_ALL_CATEGORY_REQUEST});
+    try{
+       const{ data } = await api.get("/api/category/all", {
+           headers: {
+                Authorization: `Bearer ${token}`,   
+           },
+       });
+    dispatch({type:GET_ALL_CATEGORY_SUCCESS,payload:data});
+    console.log("all categories",data);   
+    }   
+    catch(error){
+       console.log("catch error",error)
+       dispatch({type:GET_ALL_CATEGORY_FAILURE,payload:error});
+    }
+  };
+};
+
+
+export const deleteCategoryAction = ({categoryId, jwt}) =>{
+   return async (dispatch) =>{
+       dispatch({type:DELETE_CATEGORY_REQUEST});
+    try{
+       const res = await api.delete(`/api/admin/category/restaurant/${categoryId}`,{
+           headers: {
+                Authorization: `Bearer ${jwt}`,   
+           },
+       });
+       console.log("delete restaurant category",res.data);
+    dispatch({type:DELETE_CATEGORY_SUCCESS,payload:categoryId});
+    }   
+    catch(error){
+       console.log("catch error",error);
+       dispatch({type:DELETE_CATEGORY_FAILURE,payload:error});
+    }
+  };
+};
 

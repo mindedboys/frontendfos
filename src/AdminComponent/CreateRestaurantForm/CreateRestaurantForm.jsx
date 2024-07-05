@@ -6,6 +6,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import { uploadImageToCloudinary } from "../util/UploadToCloudaniry";
 import { useDispatch } from "react-redux";
 import { createRestaurant } from "../../component/State/Restaurant/Actions";
+import ClipLoader from "react-spinners/ClipLoader";
+
+
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
 
 
 const initialValues ={
@@ -14,7 +23,7 @@ const initialValues ={
     cuisineType:"",
     streetAddress:"",
     city:"",
-    stateProvince:"",
+    state:"",
     postalCode:"",
     country:"",
     email:"",
@@ -28,12 +37,15 @@ const initialValues ={
 }
 
 
-export const CreateRestaurantForm = () => {
 
+export const CreateRestaurantForm = () => {
+const [loading, setLoading] = useState(false);    
 const [uploadImage,setUploadImage] = useState(false);    
 const dispatch = useDispatch ()
 const jwt = localStorage.getItem("jwt") 
-const formik  =useFormik({
+
+
+const formik = useFormik({
     initialValues,onSubmit:(values)=>{
         const data ={
             name:values.name,
@@ -42,7 +54,7 @@ const formik  =useFormik({
             address:{
                 streetAddress:values.streetAddress,
                 city:values.city,
-                stateProvince:values.stateProvince,
+                state:values.state,
                 postalCode:values.postalCode,
                 country:values.country
                  },
@@ -57,28 +69,31 @@ const formik  =useFormik({
             opingHours:values.opingHours,
            images:values.images, 
         };
-        console.log("data---",data)
-        dispatch(createRestaurant({data,token:jwt}))     
-    }, 
+    setLoading(true);
+    setTimeout(()=>{
+        dispatch(createRestaurant({data,token:jwt}))
+    setLoading(false);
+    },800)         
+  }, 
 })
 const handleImageChange = async(e) =>{
   const file = e.target.files[0]
   setUploadImage(true)
   const image=await uploadImageToCloudinary(file)
-  console.log("image---", image)
   formik.setFieldValue("images",[...formik.values.images,image])
   setUploadImage(false)  
 };
 
-const handleRemoveImage =(index)=>{
+const handleRemoveImage = async (index)=>{
    const updatedImages=[...formik.values.images]     
-   updatedImages.splice(index,1);
+   await updatedImages.splice(index,1);
    formik.setFieldValue("images",updatedImages)
 };
 
 
 return (
         <div className='py-10 px-5 lg:flex items-center justify-center min-h-screen'>
+          {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
             <div className="lg:max-w-4xl">
             <h1 className='font-bold text-2xl text-center py-2'>
                 Add New Restaurant
@@ -188,12 +203,12 @@ return (
         </Grid>  
         <Grid item xs={12} lg={3}>
           <TextField fullWidth
-          id="stateProvince"
-          name="stateProvince"
+          id="state"
+          name="state"
           label="State"
           variant="outlined"
           onChange={formik.handleChange}
-          value={formik.values.stateProvince}
+          value={formik.values.state}
           />         
         </Grid>  
         <Grid item xs={12} lg={3}>
@@ -280,6 +295,7 @@ return (
        <Button variant="contained" color="primary" type="submit">Create Restaurant</Button>  
     </form>        
    </div>
+   }
  </div>
   )
 }

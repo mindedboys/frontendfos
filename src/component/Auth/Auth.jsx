@@ -4,27 +4,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { style } from "../Cart/Cart";
 import RegistrationForm from "./RegistrationForm";
 import LoginForm from "./LoginForm";
+import ForgotForm from "./ForgotForm";
 
 const Auth = () =>{
     const location = useLocation();
     const navigate = useNavigate();
     const handleOnClose = () =>{ navigate("/")}
 
-    return(
-        <div>
-        <>
-        <Modal onClose={handleOnClose}
-        open={
-            location.pathname==="/account/register"
+return(
+    
+        <Modal onClose={handleOnClose} 
+        open={location.pathname==="/account/register"
+            || location.pathname==="/account/forgot"    
             || location.pathname==="/account/login"
-            }>
-        <Box sx={style}>
-            { location.pathname==="/account/register"?<RegistrationForm />:<LoginForm /> }
+        
+        }>
+        <Box sx={style}> 
+            { location.pathname==="/account/register"?<RegistrationForm />
+              :location.pathname==="/account/forgot"?<ForgotForm />:<LoginForm /> 
+            }
         </Box>
-        </Modal>
-        </>   
-        </div>
-
+    </Modal>  
     );
 } ;
 

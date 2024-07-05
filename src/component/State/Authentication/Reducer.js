@@ -1,6 +1,6 @@
 import axios from "axios";
 import { favorites } from "@mui/icons-material"
-import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType";
+import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, GET_ALL_USER_FAILURE, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType";
 import { isPresentInFavorites } from "../../config/logic";
 
 const initialState={
@@ -9,7 +9,8 @@ const initialState={
     error:null,
     jwt:null,
     favorites:[],
-    success:null 
+    success:null,
+    users:[] 
 };
 
 export const authReducer=(state=initialState,action)=>{
@@ -18,6 +19,7 @@ export const authReducer=(state=initialState,action)=>{
             case REGISTER_REQUEST:
             case LOGIN_REQUEST:
             case GET_USER_REQUEST:
+            case GET_ALL_USER_REQUEST:    
             case ADD_TO_FAVORITE_REQUEST:        
                return {...state, isLoading:true, error:null, success:null}
 
@@ -28,6 +30,9 @@ export const authReducer=(state=initialState,action)=>{
 
             case GET_USER_SUCCESS:    
             return {...state, isLoading:false,user:action.payload,favorites:action.payload.favorites};
+
+            case GET_ALL_USER_SUCCESS:    
+            return {...state, isLoading:false,users:action.payload};
 
 
             case ADD_TO_FAVORITE_SUCCESS:
@@ -40,6 +45,7 @@ export const authReducer=(state=initialState,action)=>{
             case REGISTER_FAILURE:
             case LOGIN_FAILURE:
             case GET_USER_FAILURE:
+            case GET_ALL_USER_FAILURE:
             case ADD_TO_FAVORITE_FAILURE:        
                 return {...state, isLoading:false, error:action.payload, success:null}
 

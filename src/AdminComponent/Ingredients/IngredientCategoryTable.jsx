@@ -1,13 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Create, Delete, Store } from "@mui/icons-material";
 import { Box, Card, CardActions, CardHeader, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import CreateIngredientCategoryForm from "./CreateIngredientCategoryForm";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredientCategory } from "../../component/State/Ingredients/Action";
+import { deleteIngredientCategory, getIngredientCategory } from "../../component/State/Ingredients/Action";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
-const menu = [1, 1, 1, 1, 1, 1, 1, 1]
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
+
+
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -22,6 +32,7 @@ const style = {
 
 
 export const IngredientCategoryTable = () => {
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,17 +40,32 @@ export const IngredientCategoryTable = () => {
     const jwt = localStorage.getItem("jwt"); 
     const {restaurant,ingredients} = useSelector((store) => store)  
 
+
 useEffect(()=>{
+    setLoading(true);
+    setTimeout(()=>{
     dispatch(
         getIngredientCategory({
                 jwt,
                 id:restaurant.usersRestaurant.id,
              }))
-    },[])
+    setLoading(false);
+    },800)          
+},[])
     
+
+const handleDeleteIngredientCategory = async (ingredientCategoryId) =>{
+    setLoading(true);
+    setTimeout(()=>{
+    dispatch(deleteIngredientCategory({ingredientCategoryId,jwt}))
+    setLoading(false);
+    },800)
+}
 
 
 return (
+    <>
+       {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <Box>
             <Card className='mt-1'>
                 <CardHeader  action={
@@ -50,12 +76,14 @@ return (
                     title={"Ingredient Category"}
                     sx={{ pt: 2, alignItems: "center" }}
                 />
+                <h7 className="text-yellow-400">Categories are connected to food then First Delete Food</h7>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">Id</TableCell>
-                                <TableCell align="left">Name</TableCell>    
+                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="right">Delete</TableCell>    
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -64,10 +92,9 @@ return (
                                     key={item.name}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell component="th" scope="row">
-                                        {item.id}
-                                    </TableCell>
+                                    <TableCell component="th" scope="row">{item.id}</TableCell>
                                     <TableCell align="left">{item.name}</TableCell>
+                                    <TableCell align="right"><IconButton color="primary" onClick={()=>handleDeleteIngredientCategory(item.id)}><Delete /></IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -84,8 +111,9 @@ return (
                            <CreateIngredientCategoryForm />
                 </Box>
             </Modal>
-
         </Box>
+      }   
+</>        
     )
 }
 

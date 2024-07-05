@@ -6,12 +6,14 @@ import Address from "./Address";
 import Favorites from "./Favorites";
 import Events from "./Events";
 import Orders from "./Orders";
+import WalletDetails from "../WalletPayment/WalletDetails";
 
 
 
 const Profile =()=>{
-    const [openSideBar, setOpenSideBar]=useState(false);
-    return(
+   const [openSideBar, setOpenSideBar]=useState(false);
+    
+return(
         <div className='lg:flex justify-between'>
            <div className='sticky h-[80vh] lg:w-[20%]'>
                 <ProfileNavigation open={openSideBar} />
@@ -21,6 +23,7 @@ const Profile =()=>{
     <Route path='/' element={<UserProfile/>} /> 
     <Route path='/orders' element={<Orders/>} />
     <Route path='/address' element={<Address/>} />
+    <Route path='/wallet-Payment' element={<WalletDetails/>} />
     <Route path='/favorites' element={<Favorites/>} />    
     <Route path='/events' element={<Events/>} />
 </Routes>

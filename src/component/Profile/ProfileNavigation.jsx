@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HomeIcon from '@mui/icons-material/Home';
@@ -13,30 +13,36 @@ import { useDispatch } from "react-redux";
 import { logout } from "../State/Authentication/Action";
 
 
+
 const menu =[
  {title:"Orders", icon:<ShoppingBagIcon/> },
  {title:"Favorites", icon:<FavoriteIcon />},
  {title:"Address", icon:<AddReaction/>},
- {title:"Payment", icon:<AccountBalanceWalletIcon/>},
+ {title:"wallet-Payment", icon:<AccountBalanceWalletIcon/>},
  {title:"Notification", icon:<NotificationsActiveIcon/>},
  {title:"Events", icon:<EventIcon/>},
  {title:"Logout", icon:<LogoutIcon/>}
 ];
 
-const ProfileNavigation = ({open, handleClose}) => {
 
+
+const ProfileNavigation = ({open, handleClose}) => {
+    const [loading, setLoading] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:900px)');
     const navigate = useNavigate();
     const dispatch=useDispatch()
 
-    const handleNavigate = (item) =>{
-        if(item.title==="Logout"){
-            dispatch(logout());
-            navigate("/")
-        }
-        else
-navigate (`/my-profile/${item.title.toLowerCase()}`)
+
+const handleNavigate = async (item) =>{
+    if(item.title==="Logout"){        
+        await dispatch(logout());
+        await navigate("/") 
     }
+    else
+        await navigate (`/my-profile/${item.title.toLowerCase()}`)     
+    }
+
+
 
 return (
     <div>
@@ -57,10 +63,9 @@ return (
 </div>
 {i!== menu.length-1 && <Divider/>}
 </>)}
-            </div>
-
         </div>
-    );
+    </div> 
+   );
 };
 
 export default ProfileNavigation

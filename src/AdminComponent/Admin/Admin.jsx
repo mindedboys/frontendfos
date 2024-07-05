@@ -5,14 +5,12 @@ import Orders from "../Orders/Orders";
 import Menu from "../Menu/Menu";
 import FoodCategory from "../FoodCategory/FoodCategory";
 import Ingredients from "../Ingredients/Ingredients";
-import Events from "../Events/Events";
+import Event from "../Events/Event";
 import RestaurantDetails from "./RestaurantDetails";
 import RestaurantDashboard from "../Dashboard/Dashboard";
 import CreateMenuForm from "../Menu/CreateMenuForm";
-import { useDispatch, useSelector } from "react-redux";
-import { getRestaurantById, getRestaurantsCategory } from "../../component/State/Restaurant/Actions";
-import { getMenuItemsByRestaurantId } from "../../component/State/Menu/Action";
-import { fetchRestaurantsOrder } from "../../component/State/Restaurant Order/Action";
+import WalletDetails from "../Wallet/WalletDetails";
+import Withdrawal from "../Withdrawal/Withdrawal";
 
 
 export const Admin = () => {
@@ -26,15 +24,17 @@ export const Admin = () => {
              <div>        
                   <AdminSideBar handleClose={handleClose} />       
              </div> 
-             <div className='lg:w-[80%]'>
+             <div className='lg:w-[82%]'>
                 <Routes>
                     <Route path='/' element={<RestaurantDashboard/>} />
                     <Route path='/orders' element={<Orders/>} />
                     <Route path='/menu' element={<Menu/>} />
                     <Route path='/category' element={<FoodCategory/>} />
                     <Route path='/ingredients' element={<Ingredients/>} />
-                    <Route path='/event' element={<Events/>} />
-                    <Route path='/details' element={<RestaurantDetails/>} />  
+                    <Route path='/event' element={<Event/>} />
+                    <Route path='/wallet-payment' element={<WalletDetails/>} />
+                    <Route path='/Withdrawal' element={<Withdrawal />} />
+                    <Route path='/details' element={<RestaurantDetails/>} />
                     <Route path='/add-menu' element={<CreateMenuForm/>} />  
                 </Routes>
             </div>  

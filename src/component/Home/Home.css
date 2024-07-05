@@ -11,4 +11,43 @@
     background-color: black;
     opacity: 0.4;
 }
-
+.fadout{
+ background-color: initial;
+ background-image: linear-gradient(
+    180deg,
+    hsla(0, 0%, 8%, 0),
+    hsla(0, 0%, 8%, 0.15) 15%,
+    hsla(0, 0%, 8%, 0.35) 29%,
+    hsla(0, 0%, 8%, 0.58) 44%,
+    #131313 68%
+    #0d0d0d0d
+ );   
+ background-position: 0 top;
+ background-repeat: repeat-x;
+ background-size: 100% 100%;
+ bottom: -3rem;
+ height: 10vw;
+ opacity: 1;
+ width: 100%;
+ left: 0;
+ right: 0;
+ position: absolute;
+ z-index: 20;
+}
+.dataItem{
+    align-content: end;
+    width: 20%;
+    height: 20px;
+    display: flex;
+    align-items: end;
+    color: rgb(227, 114, 114);
+}
+.dataItem p{
+    margin-left: 10px;
+    }
+a{
+    text-decoration: solid;
+}
+a:hover{
+    background-color: rgb(14, 10, 10);
+}

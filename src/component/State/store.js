@@ -7,6 +7,9 @@ import cartReducer from "./Cart/Reducer";
 import orderReducer from "./Order/Reducer";
 import restaurantsOrderReducer from "./Restaurant Order/Reducer";
 import ingredientReducer from "./Ingredients/Reducer";
+import walletReducer from "./Wallet/Reducer";
+import withdrawalReducer from "./Withdrawal/Reducer";
+
 
 export const rooteReducer=combineReducers({
     auth:authReducer,
@@ -15,7 +18,9 @@ export const rooteReducer=combineReducers({
     cart:cartReducer,
     order:orderReducer, // for customer
     restaurantOrder:restaurantsOrderReducer, // for restaurant
-    ingredients:ingredientReducer
+    ingredients:ingredientReducer,
+    wallet:walletReducer,
+    withdraw:withdrawalReducer,
 }); 
 
 export const store = legacy_createStore(rooteReducer,applyMiddleware(thunk));

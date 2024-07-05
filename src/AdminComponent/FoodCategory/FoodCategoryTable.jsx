@@ -1,14 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Create, Delete } from "@mui/icons-material";
-import { Box, Card, CardActions, CardHeader, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Avatar, Box, Card, CardActions, CardHeader, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import CreateFoodCategoryForm from "./FoodCategoryForm";
 import { useDispatch, useSelector } from "react-redux";
-import { getRestaurantsCategory } from "../../component/State/Restaurant/Actions";
+import { deleteCategoryAction, getRestaurantsCategory } from "../../component/State/Restaurant/Actions";
 import { fetchRestaurantsOrder } from "../../component/State/Restaurant Order/Action";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
-//const menu = [1, 1, 1, 1, 1, 1, 1, 1]
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
+
 
 const style = {
     position: 'absolute',
@@ -23,6 +31,7 @@ const style = {
   };
 
 export const FoodCategoryTable = () => {
+    const [loading, setLoading] = useState(false);
     const {restaurant} = useSelector((store) =>store)
     const dispatch = useDispatch()
     const jwt =localStorage.getItem("jwt")
@@ -31,15 +40,31 @@ export const FoodCategoryTable = () => {
     const handleClose = () => setOpen(false);
 
     useEffect (()=>{
+        setLoading(true);
+        setTimeout(()=>{
              dispatch(
                  getRestaurantsCategory({
                      jwt,
                      restaurantId:restaurant.usersRestaurant?.id,
              }));
+        setLoading(false);
+        },800)     
     },[]);
 
+
+const handleDeleteCategory = async (categoryId) =>{
+    setLoading(true);
+    setTimeout(()=>{
+    dispatch(deleteCategoryAction({categoryId,jwt}))
+    setLoading(false);
+    },800)
+}
+    
+
     return (
-        <Box>
+        <>
+        {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
+        <Box>            
             <Card className='mt-1'>
                 <CardHeader action={
                     <IconButton  onClick={handleOpen} aria-label="settings">
@@ -53,8 +78,10 @@ export const FoodCategoryTable = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="left">Id</TableCell>
-                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="left">Food Id</TableCell>
+                                <TableCell align="left">Images</TableCell>
+                                <TableCell align="left">Food Name</TableCell>
+                                <TableCell align="right">Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -63,10 +90,12 @@ export const FoodCategoryTable = () => {
                                     key={item.name}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
+                                    <TableCell component="th" scope="row">{item.id}</TableCell>
                                     <TableCell component="th" scope="row">
-                                        {item.id}
+                                        <Avatar src={item.images[0]}></Avatar>
                                     </TableCell>
                                     <TableCell align="left">{item.name}</TableCell>
+                                    <TableCell align="right"><IconButton color="primary" onClick={()=>handleDeleteCategory(item.id)}><Delete /></IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -85,6 +114,8 @@ export const FoodCategoryTable = () => {
             </Modal>
 
         </Box>
-    )
+    } 
+ </>   
+)
 }
 

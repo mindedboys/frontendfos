@@ -2,7 +2,8 @@ import { Button, Card } from "@mui/material";
 import React from "react";
 
 const OrderCard = ({item,order}) =>{
-    return (
+
+return (
         <Card className='flex justify-between items-center p-5'>
             <div className='flex items-center sapce-x-5'>
                 <img
@@ -20,7 +21,6 @@ const OrderCard = ({item,order}) =>{
                 <Button className="cursor-not-allowed">{order.orderStatus}</Button>
             </div>
         </Card>
-
     );
 };
 

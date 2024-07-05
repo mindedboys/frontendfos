@@ -2,29 +2,42 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@m
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createIngredient, createIngredientCategory } from "../../component/State/Ingredients/Action";
+import ClipLoader from "react-spinners/ClipLoader";
 
+
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
 
 
 const CreateIngredientForm = () =>{
+const [loading, setLoading] = useState(false);    
 const {restaurant,ingredients} = useSelector((store) => store)    
 const dispatch = useDispatch();
 const jwt = localStorage.getItem("jwt");
 const[formData,setFormData] = useState ({name:"",categoryId:""}) 
 
 
-const handleSubmit = (e) =>{
+const handleSubmit = async (e) =>{
 e.preventDefault();
     const data ={
         ...formData,
         restaurantId: restaurant.usersRestaurant.id
         }
-dispatch(createIngredient({data,jwt}))
-console.log(data)
-
+        setLoading(true);
+        setTimeout(()=>{
+ dispatch(createIngredient({data,jwt}))
+setLoading(false);
+},800)
 }
-const handleInputChange = (e) =>{
+
+
+const handleInputChange = async(e) =>{
     const {name,value}=e.target
-    setFormData ({
+    await setFormData ({
         ...formData,[name]:value
     })
     }
@@ -32,6 +45,7 @@ const handleInputChange = (e) =>{
 
 return(
         <div className=''>
+            {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
            <div className='p-5'>
             <h1 className='text-gray-400 text-center text-xl pb-10'>Create Ingredient</h1>
          <form className='space-y-5' onSubmit={handleSubmit}>
@@ -59,11 +73,10 @@ return(
                                 </Select>
                             </FormControl>          
                <Button variant="contained" type="submit">Create</Button>             
-        </form>   
-         </div>     
+          </form>   
         </div>
-
-
+       }      
+    </div>
     )
 }
 

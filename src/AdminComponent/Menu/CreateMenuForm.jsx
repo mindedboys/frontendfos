@@ -7,6 +7,15 @@ import { uploadImageToCloudinary } from "../util/UploadToCloudaniry";
 import { useDispatch, useSelector } from "react-redux";
 import { createMenuItem } from "../../component/State/Menu/Action";
 import { getIngredientsOfRestaurant } from "../../component/State/Ingredients/Action";
+import ClipLoader from "react-spinners/ClipLoader";
+
+
+const CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#8de4d3", 
+  };
+
 
 
 const initialValues = {
@@ -23,6 +32,7 @@ const initialValues = {
 
 
 export const CreateMenuForm = () => {
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt");
     const {restaurant,ingredients} = useSelector((store) => store)
@@ -31,8 +41,11 @@ export const CreateMenuForm = () => {
 const formik = useFormik({
     initialValues, onSubmit: (values) => {
             values.restaurantId = 2;
+            setLoading(true);
+            setTimeout(()=>{
             dispatch(createMenuItem({menu:values,jwt}))
-            console.log("data---", values)
+            setLoading(false);
+           },800)
         },
     })
 
@@ -40,7 +53,6 @@ const handleImageChange = async (e) => {
     const file = e.target.files[0]
     setUploadImage(true)
     const image = await uploadImageToCloudinary(file)
-    console.log("image---", image)
     formik.setFieldValue("images", [...formik.values.images, image])
     setUploadImage(false)
 };
@@ -52,15 +64,20 @@ const handleRemoveImage = (index) => {
 };
 
 useEffect (()=>{
+    setLoading(true);
+    setTimeout(()=>{
     dispatch(
         getIngredientsOfRestaurant({
                jwt,
                id:restaurant.usersRestaurant.id
            }))
+           setLoading(false);
+        },800) 
 },[])
 
 return (
     <div className='py-10 px-5 lg:flex items-center justify-center min-h-screen'>
+         {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <div className="lg:max-w-4xl">
             <h1 className='font-bold text-2xl text-center py-2'>
                 Add New Menu
@@ -223,6 +240,7 @@ return (
                     <Button variant="contained" color="primary" type="submit">Create Menu</Button>
                 </form>
             </div>
+            }
         </div>
     )
 }

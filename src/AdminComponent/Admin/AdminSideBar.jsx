@@ -11,8 +11,8 @@ import zIndex from "@mui/material/styles/zIndex";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../component/State/Authentication/Action";
-
-
+import WalletIcon from '@mui/icons-material/Wallet';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 const menu =[
     {title:"Dashboard",icon:<Dashboard />, path:"/"},
@@ -21,11 +21,11 @@ const menu =[
     {title:"Food Category",icon:<CategoryIcon />, path:"/category"},
     {title:"Ingredients",icon:<FastfoodIcon/>, path:"/ingredients"},
     {title:"Events",icon:<EventIcon/>, path:"/event"},
+    {title:"Wallet-Payment",icon:<WalletIcon/>, path:"/wallet-payment"},
+    {title:"Withdrawal",icon:<PaymentsIcon/>, path:"/Withdrawal"},
     {title:"Restaurant Details",icon:<AdminPanelSettingsIcon/>, path:"/details"},
     {title:"Logout",icon:<LogoutIcon/>, path:"/"},
 ]
-
-
 
 export const AdminSideBar = ({handleClose}) => {
     const isSmallScreen=useMediaQuery("(max-width:1080px)")
@@ -50,7 +50,7 @@ return (
                open={true}
                anchor="left" 
                sx={{zIndex:1}}>
-                 <div className='w-[70vw] lg:w-[20vw] h-screen flex flex-col justify-center text-xl space-y-[1.65rem]'>
+                 <div className='w-[70vw] lg:w-[18vw] h-screen flex flex-col justify-center text-xl space-y-[1.65rem] cursor-pointer'>
                     {menu.map((item,i)=><>
                     <div onClick={()=>handleNavigate(item)} className='px-5 flex items center gap-5 cursor-poimter'>
                         {item.icon}
