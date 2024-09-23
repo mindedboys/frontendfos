@@ -42,33 +42,35 @@ const handleUpdateAvailability = (foodId) =>{
 return (
   <Box>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
-      <Card className="mt-1">
-        <CardHeader title={"All Food"} sx={{ pt: 2, alignItems: "center" }} />
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Card className="mt-1 px-2">
+        <CardHeader title={"All Food"} className="px-5" />
+        <TableContainer component={Paper}  className="px-3" >
+          <Table sx={{ minWidth: 650}} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="left">Food_ID</TableCell>
                 <TableCell align="left">Rest_ID</TableCell>
+                <TableCell align="left">Rest_FullName</TableCell>
                 <TableCell align="left">Image</TableCell>
                 <TableCell align="right">Food_Name</TableCell>
                 <TableCell align="right">Category_Name</TableCell>
                 <TableCell align="right">Food_Price</TableCell>
                 <TableCell align="right">Ingredients_Name</TableCell>
-                <TableCell align="right">Creation_Date</TableCell>
+                <TableCell align="right">Food_Creation_Date</TableCell>
                 <TableCell align="right">Is_Vegetarian</TableCell>
                 <TableCell align="right">Is_Seasonal</TableCell>                
-                <TableCell align="right">Food_Availability</TableCell>
+                <TableCell align="right">Food_Availability_Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {menu.foods.map((item) => (
-                <TableRow
+                <TableRow className="hover:scale-95 duration-300"
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                    <TableCell align="left">{item.id}</TableCell> 
                    <TableCell align="left">{item.restaurant?.id}</TableCell>
+                   <TableCell align="left">{item.restaurant?.name}</TableCell>
                     <TableCell component="th" scope="row">
                       <Avatar src={item.images[0]}></Avatar>
                     </TableCell>

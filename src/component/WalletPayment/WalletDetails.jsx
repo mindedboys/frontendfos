@@ -28,7 +28,7 @@ const CSSProperties = {
   };
 
 
-function useQuery(){
+	function useQuery(){
 	return new URLSearchParams(useLocation().search);
 }  
 
@@ -55,14 +55,17 @@ const[currentTransaction,setCurrentTransaction]=useState([])
 
 
 useEffect(()=>{
-    setLoading(true);
-    setTimeout(()=>{
-    handleFetchUserWallet();
-	handleFetchUserWalletTransaction();
-    setLoading(false);
-},800)  
-},[]);
-	
+    if(orderId){
+     dispatch(depositMoney({
+      jwt,
+      orderId,
+      paymentId:razorpayPaymentId || paymentId,
+      navigate
+      }))
+   }
+ },[orderId,paymentId,razorpayPaymentId]);
+
+ 
 
 const handleClickOpen = () => {
       setOpen(true);
@@ -91,46 +94,25 @@ const handleClickOpen = () => {
 
 
 useEffect(()=>{
-    if(orderId){
-     dispatch(depositMoney({
-      jwt,
-      orderId,
-      paymentId:razorpayPaymentId || paymentId,
-      navigate
-      }))
-   }
- },[orderId,paymentId,razorpayPaymentId]);
+		setLoading(true);
+		setTimeout(()=>{
+		handleFetchUserWallet();
+		setLoading(false);
+	},800)  
+},[dispatch,jwt]);
+	
 
- 
-
-const handleFetchUserWallet = () =>{
-	//const CurentWalletId =wallet.userWallet.id;
+const handleFetchUserWallet = (walletId) =>{
+	//walletId = wallet.Transactions[0].wallet.id;
     setLoading(true);
     setTimeout(()=>{
-    dispatch(getUserWallet({jwt}))
-	//dispatch(getWalletTransactions({CurentWalletId:wallet.userWallet.id,jwt}))
+    dispatch(getUserWallet(jwt));
+	//dispatch(getWalletTransactions({walletId,jwt}))
+	dispatch(getAllTransactions(jwt));
     setLoading(false);
 },800)    
 }
 
-const handleFetchUserWalletTransaction = () =>{
-	const CurentWalletId =wallet.userWallet.id;
-	console.log("##########",CurentWalletId);
-	dispatch(			
-		getWalletTransactions({jwt,CurentWalletId}),
-	//getAllTransactions(jwt)
-	//handleFetchTransaction()
-);
-};
-console.log("wwwwwwwwwww",wallet); 
-
-const handleFetchTransaction = () => {
-	const CurentWalletId =wallet.userWallet.id;
-	let WalletId = wallet.Transactions.filter(item=>item.wallet.id===CurentWalletId)
-	setCurrentTransaction(dispatch(getWalletTransactions({WalletId,jwt})));
-   console.log("##########",WalletId); //7
-
-} 
 
 return (
 		<>
@@ -145,19 +127,19 @@ return (
                             <h1 className="text-2xl">My Wallet</h1>
 							<div className="flex items-center gap-3">
 							<p className="text-sm">{wallet.userWallet.id}</p>
-							<ContentCopyIcon className="cursor-pointer hover:text-gray-400" />
+							<ContentCopyIcon className="cursor-pointer hover:text-gray-400 hover:scale-90 duration-300" />
 							</div>
 							</div>
                     </div>
                     <div>
-						<ReplayIcon onClick={handleFetchUserWallet} className="w-6, h-6 cursor-pointer hover:text-gray-400"/>
+						<ReplayIcon onClick={handleFetchUserWallet} className="w-6, h-6 cursor-pointer hover:text-gray-400 hover:scale-90 duration-300"/>
 					</div>
                 </div>
 				<CardContent>
 					<div className="flex items-center">
-						<span className="text-2xl font-semibold py-3">Balance-: {wallet.userWallet.balance}</span>	
+						<span className="text-2xl font-semibold py-3"> ₹{wallet.userWallet.balance}</span>	
 					</div>
-					<Button variant="outlined" color="primary"onClick={handleClickToMoneyOpen}>
+					<Button className="hover:scale-90 duration-300" variant="outlined" color="primary"onClick={handleClickToMoneyOpen}>
 					              Add Money<UploadIcon /></Button>
 			        <Dialog  open={openMoney} onClose={handleClickToMoneyClose}>
 				       <div className="h-250 w-250 hover:text-gray-400 cursor-pointer 
@@ -168,12 +150,12 @@ return (
 									</DialogContent>
 						</div>
 					</Dialog>
-				<Button variant="outlined" color="primary"onClick={handleClickToTransferOpen}>Transfer</Button>
+				<Button className="hover:scale-90 duration-300" variant="outlined" color="primary"onClick={handleClickToTransferOpen}>Transfer</Button>
 			        <Dialog  open={openTransfer} onClose={handleClickToTransferClose}>
 				       <div className="h-250 w-250 hover:text-gray-400 cursor-pointer 
 			            	flex flex-col items-cetner justify-center rounded-md">       
 							<DialogContent>
-				     			<DialogTitle>Transfer</DialogTitle>
+				     			<DialogTitle>Transfer Form</DialogTitle>
 					     				<TransferForm/>
 								</DialogContent>
 						</div>
@@ -192,7 +174,7 @@ return (
 			<div className="space-y-2 px-10">
 			{wallet.Transactions?.map((item,i)=><div key={i}>
 			
-					<Card className="px-5 flex justify-between items-center">
+					<Card className="px-5 flex justify-between items-center hover:scale-90 duration-300">
 						<div className="flex items-center gap-5">
 							<Avatar>
 								<ShuffleIcon onClick={handleFetchUserWallet} />

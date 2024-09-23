@@ -13,6 +13,8 @@ const [postsPerPage,setPostsPerPage] = useState(6);
 const lastPostIndex = currentPage * postsPerPage;
 const firstPostIndex =lastPostIndex - postsPerPage;
 const currentPosts = auth.favorites.slice(firstPostIndex,lastPostIndex);
+
+console.log("-------",auth.favorites);
     
 return (
         <div>

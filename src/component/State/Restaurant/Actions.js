@@ -43,7 +43,13 @@ import{
     DELETE_CATEGORY_FAILURE,
     GET_ALL_CATEGORY_REQUEST,
     GET_ALL_CATEGORY_SUCCESS,
-    GET_ALL_CATEGORY_FAILURE
+    GET_ALL_CATEGORY_FAILURE,
+    SEARCH_RESTAURANT_REQUEST,
+    SEARCH_RESTAURANT_SUCCESS,
+    SEARCH_RESTAURANT_FAILURE,
+    SEARCH_CATEGORY_REQUEST,
+    SEARCH_CATEGORY_SUCCESS,
+    SEARCH_CATEGORY_FAILURE
 } from "./ActionTypes";
 
 export const getAllRestaurantsAction = (token) =>{
@@ -104,7 +110,6 @@ export const getRestaurantByUserId = (jwt) =>{
 };
 
 export const createRestaurant = (reqData) =>{
-    console.log("token..............",reqData.token);
     return async (dispatch) =>{
         dispatch({type:CREATE_RESTAURANT_REQUEST});
      try{
@@ -181,6 +186,26 @@ export const updateRestaurantStatus = ({restaurantId,jwt}) =>{
         dispatch({type:UPDATE_RESTAURANT_STATUS_FAILURE,payload:error});
      }
    };
+};
+
+export const searchRestaurantAction = (keyword, jwt) =>{
+   return async (dispatch) =>{
+       dispatch({type:SEARCH_RESTAURANT_REQUEST});
+    try{
+       const response = await api.get(`/api/restaurants/search?keyword=${keyword}`,{
+           headers: {
+                Authorization: `Bearer ${jwt}`,   
+           },
+       });
+    console.log("search Restaurant ",response.data);
+    dispatch({type:SEARCH_RESTAURANT_SUCCESS,payload:response.data});
+      
+    }   
+    catch(error){
+       console.log("catch error",error)
+       dispatch({type:SEARCH_RESTAURANT_FAILURE,payload:error});
+    }
+  };
 };
 
 export const createEventAction = ({data, jwt, restaurantId}) =>{
@@ -340,3 +365,22 @@ export const deleteCategoryAction = ({categoryId, jwt}) =>{
   };
 };
 
+export const searchCategoryAction = (keyword, jwt) =>{
+   return async (dispatch) =>{
+       dispatch({type:SEARCH_CATEGORY_REQUEST});
+    try{
+       const response = await api.get(`/api/category/search?keyword=${keyword}`,{
+           headers: {
+                Authorization: `Bearer ${jwt}`,   
+           },
+       });
+    console.log("search Categories.. ",response.data);
+    dispatch({type:SEARCH_CATEGORY_SUCCESS,payload:response.data});
+      
+    }   
+    catch(error){
+       console.log("catch error",error)
+       dispatch({type:SEARCH_CATEGORY_FAILURE,payload:error});
+    }
+  };
+};

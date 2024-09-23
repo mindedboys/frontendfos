@@ -87,12 +87,12 @@ return(
                  <div>
                     <Grid container spacing={2}>
                         <Grid item xs={12} lg={6}>
-                            <img className='w-full h-[40vh] object-cover' 
+                            <img className='w-full h-[40vh] rounded-2xl object-cover' 
                             src={restaurant.restaurant?.images[0]} 
                             alt="" />
                         </Grid>
                         <Grid item xs={12} lg={6}>
-                            <img className='w-full h-[40vh] object-cover' 
+                            <img className='w-full h-[40vh] rounded-2xl object-cover' 
                             src={restaurant.restaurant?.images[1]} 
                             alt="" />
                         </Grid>    

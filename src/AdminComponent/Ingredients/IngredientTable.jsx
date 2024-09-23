@@ -76,14 +76,14 @@ return (
     <>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <Box>
-            <Card className='mt-1'>
+            <Card className='mt-1 px-2'>
                 <CardHeader  action={
           <IconButton onClick={handleOpen} aria-label="settings">
             <CreateIcon />
           </IconButton>
         }
                     title={"Ingredients"}
-                    sx={{ pt: 2, alignItems: "center" }}
+                    sx={{ pt: 3, alignItems: "center" }}
                 />
                 <h7 className="text-yellow-400">Ingredient are connected to food then First Delete Food</h7>
                 <TableContainer component={Paper}>
@@ -99,7 +99,7 @@ return (
                         </TableHead>
                         <TableBody>
                             {ingredients.ingredients.map((item) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.name}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >

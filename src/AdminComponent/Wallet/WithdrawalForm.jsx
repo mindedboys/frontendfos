@@ -33,12 +33,12 @@ return(
             <div className="flex justify-between items-center
             rounded-md bg-salad-900 text-xl font-bold px-5 py-4">
                  <p>Available Balance</p>   
-                    <p>$9000</p>
+                    <p>₹{wallet.restaurantWallet.balance}</p>
             </div>
             <div className="flex flex-col items-center">
                     <h4>Enter Withdrawal Amount</h4>
                     <div className="flex items-center justify-between">
-                    <input type="number" placeholder="$0000" 
+                    <input type="number" placeholder="₹0000" 
                         onChange={handlechange}
                         value={amount}
                         className="withdrawalInput py-7 border-none outline-none 
@@ -47,7 +47,7 @@ return(
                     </div>
             </div>
             <div>
-                <p className="pb-2">Transfer to</p>
+                <p className="pb-2">Transfer From</p>
                 <div className="flex items-center gap-5 border px-5 py-2 rounded-md">
                     <img className="h-8 w-8" src="https://clipartix.com/wp-content/uploads/2016/08/Bank-clip-art-free-free-clipart-images.jpg" alt="" />
                     <div>
@@ -56,7 +56,7 @@ return(
                     </div>
                 </div>
             </div>
-            <Button className="w-full py-7 text-xl" fullWidth onClick={handleSubmit} color="primary">Withdraw</Button>
+            <Button className="w-full py-7 text-xl" fullWidth variant="outlined" onClick={handleSubmit} color="secondary">Withdraw</Button>
         </div>
 
     )

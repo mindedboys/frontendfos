@@ -9,6 +9,8 @@ error: null,
 events: [],
 restaurantsEvents: [],
 categories: [],
+search: [],
+searchCategory: [],
 };
 
 export const restaurantReducer = (state = initialState, action) => {
@@ -16,10 +18,12 @@ export const restaurantReducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.CREATE_RESTAURANT_REQUEST:
         case actionTypes.GET_ALL_RESTAURANTS_REQUEST:
+        case actionTypes.SEARCH_RESTAURANT_REQUEST:
         case actionTypes.DELETE_RESTAURANT_REQUEST:
         case actionTypes.UPDATE_RESTAURANT_REQUEST:
         case actionTypes.GET_RESTAURANT_BY_ID_REQUEST:
         case actionTypes.CREATE_CATEGORY_REQUEST:
+        case actionTypes.SEARCH_CATEGORY_REQUEST:
         case actionTypes.GET_ALL_CATEGORY_REQUEST:
         case actionTypes.GET_RESTAURANTS_CATEGORY_REQUEST:
         case actionTypes.DELETE_CATEGORY_REQUEST:  
@@ -47,6 +51,13 @@ export const restaurantReducer = (state = initialState, action) => {
                 loading:false,
                 restaurant:action.payload
               };
+        case actionTypes.SEARCH_RESTAURANT_SUCCESS:            
+            return{
+                  ...state,
+                  loading:false,
+                  search: action.payload 
+              };           
+                  
         case actionTypes.GET_RESTAURANT_BY_USER_ID_SUCCESS:
         case actionTypes.UPDATE_RESTAURANT_STATUS_SUCCESS:
         case actionTypes.UPDATE_RESTAURANT_SUCCESS:
@@ -99,7 +110,12 @@ export const restaurantReducer = (state = initialState, action) => {
                 loading:false,
                 categories:[...state.categories,action.payload],             
               };
-        
+        case actionTypes.SEARCH_CATEGORY_SUCCESS:            
+            return{
+                    ...state,
+                    loading:false,
+                    searchCategory: action.payload 
+              };
         case actionTypes.GET_ALL_CATEGORY_SUCCESS:
             return {
                     ...state,
@@ -124,11 +140,13 @@ export const restaurantReducer = (state = initialState, action) => {
 
         case actionTypes.CREATE_RESTAURANT_FAILURE:
         case actionTypes.GET_ALL_RESTAURANTS_FAILURE:
+        case actionTypes.SEARCH_RESTAURANT_FAILURE:
         case actionTypes.DELETE_RESTAURANT_FAILURE:
         case actionTypes.UPDATE_RESTAURANT_FAILURE:
         case actionTypes.GET_RESTAURANT_BY_ID_FAILURE:
         case actionTypes.CREATE_EVENTS_FAILURE:
         case actionTypes.CREATE_CATEGORY_FAILURE:
+        case actionTypes.SEARCH_CATEGORY_FAILURE:  
         case actionTypes.GET_ALL_CATEGORY_FAILURE:                            
         case actionTypes.GET_RESTAURANTS_CATEGORY_FAILURE:
         case actionTypes.DELETE_CATEGORY_FAILURE:  

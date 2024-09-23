@@ -32,9 +32,9 @@ useEffect(()=>{
 return (
   <Box>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
-      <Card className="mt-1">
-        <CardHeader title={"All Users"} sx={{ pt: 2, alignItems: "center" }} />
-        <TableContainer component={Paper}>
+      <Card className="mt-1 px-2">
+        <CardHeader title={"All Users"} sx={{ pt: 5, alignItems: "center" }} />
+        <TableContainer component={Paper} className="px-2">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -47,7 +47,7 @@ return (
             </TableHead>
             <TableBody>
               {auth.users.map((item) => (
-                <TableRow
+                <TableRow className="hover:scale-95 duration-300"
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >

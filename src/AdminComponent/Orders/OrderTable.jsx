@@ -59,45 +59,35 @@ export const OrderTable = () => {
     handleClose();
   };
 
-  const handleDeleteOrder = async (orderId) => {
-    setLoading(true);
-    setTimeout(()=>{
-       dispatch(deleteOrderAction({ orderId, jwt }));
-    setLoading(false);
-  },800)
-  };
-
   const handleRowClick = (rowData) => {
     setSelectedOrderId(rowData.id);
   };
 
-  console.log("selectedOrderId", selectedOrderId);
 
 return (
   <Box>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
       <Card className="mt-1">
-        <CardHeader title={"All Orders"} sx={{ pt: 2, alignItems: "center" }} />
-        <TableContainer component={Paper}>
+        <CardHeader title={"All Orders"} sx={{ pt: 4, alignItems: "center" }} />
+        <TableContainer component={Paper} sx={{ px: 2, alignItems: "center" }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
+                <TableCell>Order_ID</TableCell>
                 <TableCell align="right">Image</TableCell>
-                <TableCell align="right">Food Name</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Ingredients Name</TableCell>
-                <TableCell align="right">Customer Name</TableCell>
-                <TableCell align="right">Customer Mobile</TableCell>
-                <TableCell align="right">Customer Address</TableCell>
+                <TableCell align="right">Food_Name</TableCell>
+                <TableCell align="right">Food_Price</TableCell>
+                <TableCell align="right">Ingredients_Name</TableCell>
+                <TableCell align="right">Customer_Name</TableCell>
+                <TableCell align="right">Customer_Mobile</TableCell>
+                <TableCell align="right">Customer_Address</TableCell>
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Update</TableCell>
-                <TableCell align="right">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {restaurantOrder.orders.map((item) => (
-                <TableRow
+                <TableRow className="hover:scale-95 duration-300"
                   key={item.id}
                   selected={item.id === selectedOrderId}
                   onClick={() => handleRowClick(item)}
@@ -163,14 +153,6 @@ return (
                         </MenuItem>
                       ))}
                     </Menu>
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      color="primary"
-                      onClick={() => handleDeleteOrder(item.id)}
-                    >
-                      <Delete />
-                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

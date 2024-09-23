@@ -43,7 +43,7 @@ return(
                 onChange={handlechange}
                 value={formData.amount}
                 className="py-7"
-                placeholder="$0000"
+                placeholder="0000"
                 />
             </div>
             <div>
@@ -57,7 +57,7 @@ return(
                 />
             </div>
             <div>
-                <h1 className="pb-1">Purpose</h1>
+                <h1 className="pb-1">Purpose Of Amount</h1>
                 <input type="text" 
                 name="purpose" 
                 onChange={handlechange}
@@ -66,7 +66,7 @@ return(
                 placeholder="Purpose"
                 />
             </div>
-            <Button fullWidth onClick={handleSubmit} color="primary">Submit</Button>
+            <Button fullWidth variant="outlined" onClick={handleSubmit} color="secondary">Submit</Button>
 
         </div>
 

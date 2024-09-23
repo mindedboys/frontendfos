@@ -9,13 +9,14 @@ import RestaurantDetails from './component/Restaurant/RestaurantDetails';
 import Cart from './component/Cart/Cart';
 import Profile from './component/Profile/Profile';
 import CustomerRoute from './Routers/CustomerRoute';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './component/State/Authentication/Action';
 import Auth from './component/Auth/Auth';
 import { findCart } from './component/State/Cart/Action';
 import Routers from './Routers/Routers';
 import { getRestaurantByUserId } from './component/State/Restaurant/Actions';
+import { Visibility } from './component/context/contextAPI';
 
 
 
@@ -35,17 +36,18 @@ function App() {
   },[auth.user]);
 
 
-  return (
+  const[visible,setVisible] = useState(false);
+
+
+return (
+    <Visibility.Provider value={{visible,setVisible}}>
+<div className={visible ? 'max-h-screen overflow-hidden' : ''}>
     <ThemeProvider theme={darkTheme}>
       <CssBaseline/>
           <Routers/>
-{/*<Navbar/>*/}   
-{/*<Home/>*/}
-{/*<RestaurantDetails/>*/}
-{/*<Cart>*/}
-{/*<Profile/>*/}
-{/*<CustomerRoute/>*/}
     </ThemeProvider>
+</div>    
+</Visibility.Provider>
   );
 }
 

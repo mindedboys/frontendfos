@@ -159,9 +159,9 @@ return (
                             (<AddressCard handleSelectAddress={createOrderUsingSelectedAddress}
                                 item={item} showButton={true}
                             />))}
-                            <Card className="flex gap-5 w-64 p-5">
+                            <Card className="flex gap-5 w-64 p-5 hover:scale-95 duration-300">
                                 <AddLocation />
-                                <div className="space-y-3 tex-gray-500">
+                                <div className="space-y-3 tex-gray-500 ">
                                     <h1 className="font-semibold text-lg text-white">Add New Address</h1>
                                     <Button variant="outlined" fullWidth onClick={handleOpenAddressModal}>Add</Button>
                                 </div>

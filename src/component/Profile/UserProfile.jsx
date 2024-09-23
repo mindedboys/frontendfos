@@ -14,7 +14,7 @@ const handleLogout = async () =>{ }
 
 return (
     <div className='min-h-[80vh] flex flex-col justify-center items-center text-center'>
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center hover:scale-95 duration-300'>
             <AccountCircleIcon sx={{fontSize:"9rem"}}/>
                 <h1 className='py-5 text-2xl font-semibold'>{auth.user?.fullName}</h1>
                      <p>Email:- {auth.user?.email}</p>

@@ -42,17 +42,15 @@ const handleNavigateToRestaurant = async() =>{
     }
 }
 
-console.log("print",item)
 return(
     <>
       {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
-        <Card className='m-2 w-[18rem]'>
+        <Card className='m-2 w-[18rem] hover:scale-90 duration-300'>
             <div onClick={handleNavigateToRestaurant} 
                  className= {`${true?'cursor-pointer':"cursor-not-allowed"} relative`}>
+      <img className="w-full h-[15rem] object-cover rounded-2xl" src={item.images[1]} alt="" />
+      <div className="bg-gradient-to-t from-black from-1% to-transparant to-40% rounded-2xl w-full h-full absolute top-0"></div>  
 
-      <img className="w-full h-[15rem] rounded-t-md object-cover" 
-           src={item.images[1]} 
-           alt="" />
     <Chip size="small" 
            className="absolute top-2 left-2" 
            color={item.open?"success":"error"} 
@@ -62,15 +60,14 @@ return(
         
          <div className="p-4 textPart lg:flex w-full justify-between">
             <div className="space-y-1">
-                <p className="font-semibold text-lg cursor-pointer">
+                <p className="font-bold text-lg cursor-pointer">
                     {item.name?.length>25
                    ? item.name.substring(0, 25) + "..."
                    : item.name}
                 </p>
-                <p className="text-gray-500 text-5m">
-                   {item.description?.length>40
-                   ? item.description.substring(0, 40) + "..."
-                   : item.description}
+                <p className="text-gray-500 text-sm">{item.cuisineType}</p>
+                <p className="text-gray-500 text-sm">
+                {item.address?.streetAddress},{item.address?.city}-{item.address?.postalCode},{item.address?.state}
                 </p>
             </div>
             <div>

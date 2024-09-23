@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_PAYMENT_DETAILS_FAILURE, ADD_PAYMENT_DETAILS_REQUEST, ADD_PAYMENT_DETAILS_SUCCESS, GET_PAYMENT_DETAILS_FAILURE, GET_PAYMENT_DETAILS_REQUEST, GET_PAYMENT_DETAILS_SUCCESS, GET_WITHDRAWAL_HISTORY_FAILURE, GET_WITHDRAWAL_HISTORY_REQUEST, GET_WITHDRAWAL_HISTORY_SUCCESS, GET_WITHDRAWAL_REQUEST_FAILURE, GET_WITHDRAWAL_REQUEST_REQUEST, GET_WITHDRAWAL_REQUEST_SUCCESS, WITHDRAWALPROCEED_FAILURE, WITHDRAWALPROCEED_REQUEST, WITHDRAWALPROCEED_SUCCESS, WITHDRAWAL_FAILURE, WITHDRAWAL_PROCEED_FAILURE, WITHDRAWAL_PROCEED_REQUEST, WITHDRAWAL_PROCEED_SUCCESS, WITHDRAWAL_REQUEST, WITHDRAWAL_SUCCESS } from "./ActionType";
+import { ADD_PAYMENT_DETAILS_FAILURE, ADD_PAYMENT_DETAILS_REQUEST, ADD_PAYMENT_DETAILS_SUCCESS, GET_ALL_PAYMENT_DETAILS_FAILURE, GET_ALL_PAYMENT_DETAILS_REQUEST, GET_ALL_PAYMENT_DETAILS_SUCCESS, GET_PAYMENT_DETAILS_FAILURE, GET_PAYMENT_DETAILS_REQUEST, GET_PAYMENT_DETAILS_SUCCESS, GET_WITHDRAWAL_HISTORY_FAILURE, GET_WITHDRAWAL_HISTORY_REQUEST, GET_WITHDRAWAL_HISTORY_SUCCESS, GET_WITHDRAWAL_REQUEST_FAILURE, GET_WITHDRAWAL_REQUEST_REQUEST, GET_WITHDRAWAL_REQUEST_SUCCESS, UPDATE_PAYMENT_DETAILS_FAILURE, UPDATE_PAYMENT_DETAILS_REQUEST, UPDATE_PAYMENT_DETAILS_SUCCESS, WITHDRAWALPROCEED_FAILURE, WITHDRAWALPROCEED_REQUEST, WITHDRAWALPROCEED_SUCCESS, WITHDRAWAL_FAILURE, WITHDRAWAL_PROCEED_FAILURE, WITHDRAWAL_PROCEED_REQUEST, WITHDRAWAL_PROCEED_SUCCESS, WITHDRAWAL_REQUEST, WITHDRAWAL_SUCCESS } from "./ActionType";
 import { api } from "../../config/api";
 
 
@@ -22,11 +22,11 @@ export const withdrawalRequest = ({amount,jwt}) =>{
    };
 };
 
-export const proceedWithdrawal = ({jwt,withdrawalId,accept}) =>{
+export const proceedWithdrawal = ({jwt,withdrawalId,withdrawStatus}) =>{
     return async (dispatch) =>{
         dispatch({type:WITHDRAWAL_PROCEED_REQUEST});
      try{
-        const response = await api.patch(`/api/admin/withdrawal/${withdrawalId}/proceed/${accept}`,null, {
+        const response = await api.patch(`/api/admin/withdrawal/${withdrawalId}/proceed/${withdrawStatus}`,{}, {
             headers: {
                  Authorization: `Bearer ${jwt}`,   
             },
@@ -116,3 +116,41 @@ export const getPaymentDetails = (jwt) =>{
      }
    };
 };
+
+export const getAllPaymentDetails = (jwt) =>{
+   return async (dispatch) =>{
+       dispatch({type:GET_ALL_PAYMENT_DETAILS_REQUEST});
+    try{
+       const response = await api.get(`/api/admin/payment-details/all`, {
+           headers: {
+                Authorization: `Bearer ${jwt}`,   
+           },
+       });
+       console.log("get All Payment-Details...",response.data);
+    dispatch({type:GET_ALL_PAYMENT_DETAILS_SUCCESS,payload:response.data});
+    }   
+    catch(error){
+       console.log("catch error",error)
+       dispatch({type:GET_ALL_PAYMENT_DETAILS_FAILURE,payload:error});
+    }
+  };
+};
+
+export const updatePaymentDetails = ({userId,data,jwt}) =>{
+   return async (dispatch) =>{
+       dispatch({type:UPDATE_PAYMENT_DETAILS_REQUEST});
+    try{
+       const res = await api.put(`/api/admin/payment-details/update/${userId}`,data,{
+            headers: {
+                  Authorization: `Bearer ${jwt}`,   
+                 },
+          });
+    dispatch({type:UPDATE_PAYMENT_DETAILS_SUCCESS,payload:res.data});
+    console.log("Updated Payment details",res.data);
+    }   
+    catch(error){
+       dispatch({type:UPDATE_PAYMENT_DETAILS_FAILURE,payload:error});
+       console.log("catch error",error)
+    }
+  };
+ };

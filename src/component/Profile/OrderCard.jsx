@@ -5,9 +5,9 @@ const OrderCard = ({item,order}) =>{
 
 return (
         <Card className='flex justify-between items-center p-5'>
-            <div className='flex items-center sapce-x-5'>
+            <div className='flex items-center sapce-x-5 hover:scale-90 duration-300'>
                 <img
-                className='h-16 w-16' 
+                className='h-16 w-16 rounded-2xl' 
                 src={item.food.images[0]} 
                 alt="" 
                 />

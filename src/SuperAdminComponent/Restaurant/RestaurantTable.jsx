@@ -50,27 +50,27 @@ setLoading(false);
 return (
   <Box>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
-      <Card className="mt-1">
-        <CardHeader title={"All Restaurants"} sx={{ pt: 2, alignItems: "center" }} />
-        <TableContainer component={Paper}>
+      <Card className="mt-1 px-2">
+        <CardHeader className="px-5" title={"All Restaurants"}/>
+        <TableContainer component={Paper} className="px-3">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Image</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Mobile</TableCell>
-                <TableCell align="right">Address</TableCell>
-                <TableCell align="right">Cuisine Type</TableCell>
-                <TableCell align="right">Registrated Date</TableCell>
-                <TableCell align="right">Status</TableCell>
+                <TableCell>Rest_ID</TableCell>
+                <TableCell align="right">Rest_Image</TableCell>
+                <TableCell align="right">Rest_FullName</TableCell>
+                <TableCell align="right">Restaurant_Email</TableCell>
+                <TableCell align="right">Restaurant_Mobile</TableCell>
+                <TableCell align="right">Restaurant_Address</TableCell>
+                <TableCell align="right">Cuisine_Type</TableCell>
+                <TableCell align="right">Registrated_Date</TableCell>
+                <TableCell align="right">Current_Status</TableCell>
                 <TableCell align="right">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {restaurant.restaurants.map((item) => (
-                <TableRow
+                <TableRow className="hover:scale-95 duration-300"
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >

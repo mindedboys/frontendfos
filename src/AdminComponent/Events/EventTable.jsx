@@ -66,31 +66,32 @@ return (
     <>
      {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <Box>
-            <Card className='mt-1'>
+            <Card className='mt-1 px-3'>
                 <CardHeader  
                 action={
                    <IconButton onClick={handleOpen} aria-label="settings">
                               <CreateIcon />
                     </IconButton>
                        }
-                    title={"Event"}
-                    sx={{ pt: 2, alignItems: "center" }}
+                    title={"All Event"} 
+                    sx={{ pt: 5, alignItems: "center" }}
                 />
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} >
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="left">Event ID</TableCell>
+                                <TableCell align="left">Event_iD</TableCell>
                                 <TableCell align="left">Images</TableCell>
-                                <TableCell align="right">Event Name</TableCell>
-                                <TableCell align="right">Start Date</TableCell>
-                                <TableCell align="right">End Date</TableCell>
+                                <TableCell align="right">Event_Name</TableCell>
+                                <TableCell align="right">Event_Location</TableCell>
+                                <TableCell align="right">Start_Date</TableCell>
+                                <TableCell align="right">End_Date</TableCell>
                                 <TableCell align="right">Delete</TableCell>                                
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {restaurant.restaurantsEvents.map((item) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
@@ -99,6 +100,7 @@ return (
                                         <Avatar src={item.images[0]}></Avatar>
                                     </TableCell>
                                     <TableCell align="right">{item.name}</TableCell>
+                                    <TableCell align="right">{item.location}</TableCell>
                                     <TableCell align="right">{item.startedAt}</TableCell>
                                     <TableCell align="right">{item.endsAt}</TableCell>
                                     <TableCell align="right"><IconButton color="primary" onClick={()=>handleDeleteEvent (item.id)}><Delete /></IconButton></TableCell>

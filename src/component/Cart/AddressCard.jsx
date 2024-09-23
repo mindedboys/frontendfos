@@ -53,7 +53,7 @@ const handledeleteAddress = (addressId) =>{
     
 
 return(
-        <Card className="flex gap-5 w-64 p-5">
+        <Card className="flex gap-5 w-64 p-5 hover:scale-90 duration-300">
             <HomeIcon/>
             <div className="space-y-3 tex-gray-500 ">
             <h1 className="font-semibold text-lg text-white">Home</h1>   

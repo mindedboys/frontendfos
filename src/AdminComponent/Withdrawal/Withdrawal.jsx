@@ -101,7 +101,7 @@ return (
                         </TableHead>
                         <TableBody>
                             {withdraw.history.map((item,index) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >

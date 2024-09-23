@@ -1,5 +1,5 @@
 //Reducer.js
-import { DEPOSIT_MONEY_FAILURE, DEPOSIT_MONEY_REQUEST, DEPOSIT_MONEY_SUCCESS, GET_USER_WALLET_FAILURE, GET_USER_WALLET_REQUEST, GET_USER_WALLET_SUCCESS, GET_WALLET_ALL_TRANSACTION_FAILURE, GET_WALLET_ALL_TRANSACTION_REQUEST, GET_WALLET_ALL_TRANSACTION_SUCCESS, GET_WALLET_TRANSACTION_FAILURE, GET_WALLET_TRANSACTION_REQUEST, GET_WALLET_TRANSACTION_SUCCESS, TRANSFER_MONEY_FAILURE, TRANSFER_MONEY_REQUEST, TRANSFER_MONEY_SUCCESS } from "./ActionType";
+import { DEPOSIT_MONEY_FAILURE, DEPOSIT_MONEY_REQUEST, DEPOSIT_MONEY_SUCCESS, GET_ALL_TRANSACTION_FAILURE, GET_ALL_TRANSACTION_REQUEST, GET_ALL_TRANSACTION_SUCCESS, GET_USER_WALLET_FAILURE, GET_USER_WALLET_REQUEST, GET_USER_WALLET_SUCCESS, GET_WALLET_TRANSACTION_FAILURE, GET_WALLET_TRANSACTION_REQUEST, GET_WALLET_TRANSACTION_SUCCESS, TRANSFER_MONEY_FAILURE, TRANSFER_MONEY_REQUEST, TRANSFER_MONEY_SUCCESS } from "./ActionType";
 
 
 
@@ -7,9 +7,9 @@ const initialState ={
     userWallet: {},
     restaurantWallet: {},
     adminWallet: {},
+    Transactions:[],
     laoding: false,
     error: null,
-    Transactions: [],
 };
 
 
@@ -19,14 +19,20 @@ export const walletReducer = (state = initialState, action) =>{
         case DEPOSIT_MONEY_REQUEST:
         case TRANSFER_MONEY_REQUEST:
         case GET_WALLET_TRANSACTION_REQUEST:
-        case GET_WALLET_ALL_TRANSACTION_REQUEST:     
+        case GET_ALL_TRANSACTION_REQUEST:     
              return{
                     ...state,
                      loading:true,
                      error:null,
                     };
     
-        case GET_WALLET_ALL_TRANSACTION_SUCCESS:
+        case GET_ALL_TRANSACTION_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                Transactions:action.payload,
+              };
         case GET_WALLET_TRANSACTION_SUCCESS:
               return{
                 ...state,
@@ -58,7 +64,7 @@ export const walletReducer = (state = initialState, action) =>{
         case DEPOSIT_MONEY_FAILURE:
         case TRANSFER_MONEY_FAILURE:
         case GET_WALLET_TRANSACTION_FAILURE:
-        case GET_WALLET_ALL_TRANSACTION_FAILURE:    
+        case GET_ALL_TRANSACTION_FAILURE:    
             return{
                 ...state,
                 loading: false,

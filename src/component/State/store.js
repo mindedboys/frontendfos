@@ -9,6 +9,7 @@ import restaurantsOrderReducer from "./Restaurant Order/Reducer";
 import ingredientReducer from "./Ingredients/Reducer";
 import walletReducer from "./Wallet/Reducer";
 import withdrawalReducer from "./Withdrawal/Reducer";
+import filterSlice from "../Util/filterSlice";
 
 
 export const rooteReducer=combineReducers({
@@ -21,6 +22,7 @@ export const rooteReducer=combineReducers({
     ingredients:ingredientReducer,
     wallet:walletReducer,
     withdraw:withdrawalReducer,
+    filterSlice:filterSlice,
 }); 
 
 export const store = legacy_createStore(rooteReducer,applyMiddleware(thunk));

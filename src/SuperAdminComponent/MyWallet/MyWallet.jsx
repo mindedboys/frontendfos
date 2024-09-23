@@ -1,18 +1,18 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import OrderTable from "../Orders/OrderTable";
+import WalletDetails from "./WalletDetails";
 
 
-export const RestaurantDashboard = () => {
+export const MyWallet = () => {
     return (
         <div>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                   
+                    <WalletDetails />
                 </Grid>
             </Grid>
         </div>
     )
 }
 
-export default RestaurantDashboard;
+export default MyWallet;

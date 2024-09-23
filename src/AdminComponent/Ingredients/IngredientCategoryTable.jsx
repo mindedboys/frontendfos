@@ -88,7 +88,7 @@ return (
                         </TableHead>
                         <TableBody>
                             {ingredients.category.map((item) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.name}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >

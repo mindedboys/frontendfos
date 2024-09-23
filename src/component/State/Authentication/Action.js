@@ -1,5 +1,5 @@
 import axios from "axios" 
-import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, GET_ALL_USER_FAILURE, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType"
+import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, FORGOT_FAILURE, FORGOT_REQUEST, FORGOT_SUCCESS, GET_ALL_USER_FAILURE, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, RESET_FAILURE, RESET_REQUEST, RESET_SUCCESS } from "./ActionType"
 import { API_URL, api } from "../../config/api"
 
 
@@ -40,6 +40,34 @@ export const loginUser=(reqData) =>async(dispatch)=>{
         console.log("error",error)
     }
 }  
+
+export const ForgotUser=(reqData) => async (dispatch) =>{
+    dispatch({type:FORGOT_REQUEST});
+    try {
+        const {data} = await api.post(`api/users/rest-password/send-otp`,reqData);
+        dispatch({type:FORGOT_SUCCESS,payload:reqData})        
+        console.log("Forgot success",reqData)
+    } catch (error) {
+        dispatch({type:FORGOT_FAILURE,payload:error})
+        console.log("error",error)
+    }
+  }; 
+
+export const ResetUser=(reqData,id) =>async(dispatch)=>{
+    dispatch({type:RESET_REQUEST})
+    try {
+        const{data}=await axios.post(`${API_URL}/api/users/users/rest-password/verify-otp?id=${id}`,reqData.userData)
+        if(data.jwt)localStorage.setItem("jwt",data.jwt)
+            reqData.navigate("/");        
+        dispatch({type:RESET_SUCCESS,payload:data.jwt})
+        console.log("Reset success",data)
+    } catch (error) {
+        dispatch({type:RESET_FAILURE,payload:error})
+        console.log("error",error)
+    }
+}
+
+
 
 export const getUser=(jwt) =>async(dispatch)=>{
     dispatch({type:GET_USER_REQUEST})

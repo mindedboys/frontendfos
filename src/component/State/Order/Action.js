@@ -56,7 +56,7 @@ export const updateAddress = ({addressId,data,jwt}) =>{
   return async (dispatch) =>{
       dispatch({type:UPDATE_ADDRESS_REQUEST});
    try{
-      const res = await api.put(`/api/address/update/${addressId}`,data, {
+      const res = await api.put(`/api/address/update/${addressId}`,data,{}, {
           headers: {
                Authorization: `Bearer ${jwt}`,   
           },
@@ -114,7 +114,7 @@ export const createAddressAction = ({data, jwt}) =>{
  };
 };
 
-export const getAllAddress = ({jwt}) =>{
+export const getAllAddress = (jwt) =>{
   return async (dispatch) =>{
       dispatch({type:GET_ALL_ADDRESS_REQUEST});
    try{

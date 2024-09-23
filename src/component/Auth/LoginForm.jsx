@@ -1,12 +1,10 @@
-import { Email, Password } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { navigate, useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../State/Authentication/Action";
 import ClipLoader from "react-spinners/ClipLoader";
-
 
 
 const CSSProperties = {
@@ -37,7 +35,8 @@ const handleSubmit = async (values) =>{
     setLoading(false);
     },800)     
 }
-        
+    
+
 return(
     <>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
@@ -62,14 +61,14 @@ return(
                     margin="normal"
                     type="password"
                 />           
-               <Button sx={{mt:2, padding:"1rem"}} fullWidth type='submit' variant='contained'>Login</Button>        
+               <Button className="h-10 w-8" sx={{mt:2, padding:"1rem"}} fullWidth type='submit' variant='contained'>Login</Button>       
             </Form>
             </Formik>    
             <Typography variant="body2" align='center' sx={{mt:3}}>Don't have an Account?
                 <Button size='small' onClick={()=>navigate("/account/register")}>Register</Button>
             </Typography>
-            <div className="mt-3 px-15 text-sm">
-                <Button variant="outlined" size='small' onClick={()=>navigate("/account/forgot")}>Forgot Password</Button>
+            <div className="mt-5 text-sm text-right">
+                <Link to={'/account/forgot'}>Forgot Password</Link>
             </div>
         </div>
     }

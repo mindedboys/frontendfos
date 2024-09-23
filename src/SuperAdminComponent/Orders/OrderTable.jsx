@@ -76,31 +76,31 @@ const handleDeleteOrder = async (orderId) => {
 return (
   <Box>
     {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
-      <Card className="mt-1">
-        <CardHeader title={"All Orders"} sx={{ pt: 2, alignItems: "center" }} />
-        <TableContainer component={Paper}>
+      <Card className="mt-1 px-2">
+        <CardHeader title={"All Orders"} />
+        <TableContainer component={Paper} className="px-3">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Ordr_ID</TableCell>
+                <TableCell>Order_ID</TableCell>
                 <TableCell>Rest_ID</TableCell>
-                <TableCell align="right">Image</TableCell>
-                <TableCell align="right">Created_At</TableCell>
+                <TableCell align="right">Food_Image</TableCell>
+                <TableCell align="right">Created_Date</TableCell>
                 <TableCell align="right">Food_Name</TableCell>
-                <TableCell align="right">Price</TableCell>
+                <TableCell align="right">Food_Price</TableCell>
                 <TableCell align="right">Ingred_Name</TableCell>
-                <TableCell align="right">Cust_Id</TableCell>
-                <TableCell align="right">Customer_Name</TableCell>
-                <TableCell align="right">Cust_Mobile</TableCell>
+                <TableCell align="right">Customer_Id</TableCell>
+                <TableCell align="right">Customer_FullName</TableCell>
+                <TableCell align="right">Customer_Mobile</TableCell>
                 <TableCell align="right">Customer_Address</TableCell>
-                <TableCell align="right">Status</TableCell>
+                <TableCell align="right">Current_Status</TableCell>
                 <TableCell align="right">Update</TableCell>
                 <TableCell align="right">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {restaurantOrder.orders.map((item) => (
-                <TableRow
+                <TableRow className="hover:scale-95 duration-300"
                   key={item.id}
                   selected={item.id === selectedOrderId}
                   onClick={() => handleRowClick(item)}

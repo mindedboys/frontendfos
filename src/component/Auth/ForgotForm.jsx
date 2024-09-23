@@ -1,8 +1,9 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup, TextField, Typography } from "@material-ui/core";
 import { Form, Field, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ForgotUser } from "../State/Authentication/Action";
 
 
 const CSSProperties = {
@@ -14,7 +15,8 @@ const CSSProperties = {
 
 
 const initialValue={ 
-    email:"", 
+    sendTo:"",
+    verificationType:"" 
 }
 
 
@@ -22,39 +24,54 @@ const ForgotForm = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch=useDispatch()
+    const jwt = localStorage.getItem("jwt")
+    const[oTPMethod,setOTPMethod] = React.useState("EMAIL");
 
 
-const handleSubmit = async (values) =>{/*
+const handleOTPMethodChange =(e)=>{
+    setOTPMethod(e.target.value);
+}
+
+const handleSubmit = async (value) =>{
+    const data = {sendTo:value.sendTo, verificationType:value.verificationType}
     setLoading(true);
     setTimeout(()=>{
-        dispatch(loginUser({userData:values,navigate}))
+        dispatch(ForgotUser(data))
     setLoading(false);
     },800)     
-    */
+    
 }
         
 return(
-    <div>
-        <Typography variant='h5' className='text center'>Forgot Password</Typography>   
+    <div >
+        <Typography variant='h6' >Enter Registered Email</Typography>   
             <Formik onSubmit={handleSubmit} initialValues={initialValue}>
                <Form >
-                    <Field 
+               <Field 
                     as={TextField}
                     name="email"
-                    label="Email"
+                    label="Email address"
                     fullWidth
                     variant="outlined"
-                    margin="normal"
+                    margin="normal" className="bg-white"
                     />
-               <Button sx={{mt:2, padding:"1rem"}} fullWidth type='submit' variant='contained'>Forgot Password</Button>        
+                            <div>
+            <Typography>OTP Type</Typography>
+            <FormControl className="py-10 space-y-5" component={"fieldset"}>
+            <RadioGroup 
+                 onChange={handleOTPMethodChange}
+                 aria-labelledby="demo-radio-buttons-group-label"
+                 value={oTPMethod}
+                 name="OTP_Method"
+            >
+        <FormControlLabel label="Email" value="EMAIL" control={<Radio />} name="EMAIL"/>
+        <FormControlLabel label="Mobile" value="MOBILE" control={<Radio />} name="MOBILE" />
+        </RadioGroup>
+        </FormControl>
+       </div>
+               <Button color="secondary" type='submit' variant='contained'>Send OTP</Button>        
             </Form>
             </Formik>    
-            <Typography variant="body2" align='center' sx={{mt:3}}>
-                <Button size='small' onClick={()=>navigate("/account/login")}>Login</Button>
-            </Typography>
         </div>
-    
-)
-}
-
+)}
 export default ForgotForm;

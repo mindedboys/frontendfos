@@ -1,5 +1,5 @@
 import { stat } from "fs";
-import { ADD_PAYMENT_DETAILS_SUCCESS, GET_PAYMENT_DETAILS_SUCCESS, GET_WITHDRAWAL_HISTORY_FAILURE, GET_WITHDRAWAL_HISTORY_REQUEST, GET_WITHDRAWAL_HISTORY_SUCCESS, GET_WITHDRAWAL_REQUEST_FAILURE, GET_WITHDRAWAL_REQUEST_REQUEST, GET_WITHDRAWAL_REQUEST_SUCCESS, WITHDRAWALPROCEED_REQUEST, WITHDRAWAL_FAILURE, WITHDRAWAL_PROCEED_FAILURE, WITHDRAWAL_PROCEED_REQUEST, WITHDRAWAL_REQUEST, WITHDRAWAL_SUCCESS } from "./ActionType";
+import { ADD_PAYMENT_DETAILS_SUCCESS, GET_ALL_PAYMENT_DETAILS_SUCCESS, GET_PAYMENT_DETAILS_SUCCESS, GET_WITHDRAWAL_HISTORY_FAILURE, GET_WITHDRAWAL_HISTORY_REQUEST, GET_WITHDRAWAL_HISTORY_SUCCESS, GET_WITHDRAWAL_REQUEST_FAILURE, GET_WITHDRAWAL_REQUEST_REQUEST, GET_WITHDRAWAL_REQUEST_SUCCESS, UPDATE_PAYMENT_DETAILS_SUCCESS, WITHDRAWALPROCEED_REQUEST, WITHDRAWAL_FAILURE, WITHDRAWAL_PROCEED_FAILURE, WITHDRAWAL_PROCEED_REQUEST, WITHDRAWAL_REQUEST, WITHDRAWAL_SUCCESS } from "./ActionType";
 import { error } from "console";
 
 
@@ -9,7 +9,9 @@ const initialState ={
     loading: false,
     error: null,
     PaymentDetails:null,
+    AdminPaymentDetails:[],
     requests: [],
+    update: null,
 };
 
 const withdrawalReducer = (state = initialState, action)=>{
@@ -33,12 +35,29 @@ const withdrawalReducer = (state = initialState, action)=>{
             };
         case ADD_PAYMENT_DETAILS_SUCCESS:
         case GET_PAYMENT_DETAILS_SUCCESS:
+                return {
+                        ...state,
+                        PaymentDetails:action.payload,                    
+                        loading:false,
+                        error: null,
+                    }
+        case GET_ALL_PAYMENT_DETAILS_SUCCESS:
             return {
                     ...state,
-                    PaymentDetails:action.payload,
+                    AdminPaymentDetails:action.payload,                    
                     loading:false,
                     error: null,
                 }  
+        case UPDATE_PAYMENT_DETAILS_SUCCESS:
+            const updatePaymentDetails = state.AdminPaymentDetails.map((AdminPaymentDetails)=>
+                AdminPaymentDetails.id === action.payload.id?action.payload:AdminPaymentDetails
+            );
+            return{
+                ...state,
+                loading:false,
+                AdminPaymentDetails:updatePaymentDetails
+              };
+
         case WITHDRAWAL_PROCEED_REQUEST:
             return{
                 ...state,

@@ -44,7 +44,7 @@ return(
                 onChange={handlechange}
                 value={amount}
                 className="flex items-center text-lg"
-                placeholder="$0000"
+                placeholder="0000"
                 />
             </div>
             <div>
@@ -66,7 +66,7 @@ return(
         </RadioGroup>
         </FormControl>
        </div>
-            <Button fullWidth onClick={handleSubmit} color="primary">Submit</Button>
+            <Button fullWidth onClick={handleSubmit} variant="outlined" color="secondary">Submit</Button>
         </div>
     )
 }

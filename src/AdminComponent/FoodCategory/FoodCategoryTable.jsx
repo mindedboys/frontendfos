@@ -65,16 +65,13 @@ const handleDeleteCategory = async (categoryId) =>{
         <>
         {loading ?<ClipLoader color={'#8de4d3'} loading={loading} cssOverride={CSSProperties} size={50} /> :
         <Box>            
-            <Card className='mt-1'>
+            <Card className='mt-1 px-3'>
                 <CardHeader action={
-                    <IconButton  onClick={handleOpen} aria-label="settings">
-                        <CreateIcon />
-                    </IconButton>
-                }
-                    title={"Food Category"}
-                    sx={{ pt: 2, alignItems: "center" }}
+                    <IconButton  onClick={handleOpen} aria-label="settings"><CreateIcon /></IconButton>
+                                  }
+                    title={"Food Category"} 
                 />
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} className="px-3">
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -86,7 +83,7 @@ const handleDeleteCategory = async (categoryId) =>{
                         </TableHead>
                         <TableBody>
                             {restaurant.categories.map((item) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.name}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >

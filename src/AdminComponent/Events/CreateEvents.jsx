@@ -52,7 +52,7 @@ export const CreateEvents = () => {
     const {restaurant} = useSelector((store) => store)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-        
+
     
 
 const formik = useFormik({
@@ -69,7 +69,7 @@ const formik = useFormik({
     setTimeout(()=>{    
        dispatch(createEventAction({jwt,restaurantId:restaurant.usersRestaurant?.id,data}))
     setLoading(false);
-    },800)   
+    },800)  
 }})
 
 

@@ -64,10 +64,9 @@ return (
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <div className='lg:flex items-center justify-between box'>
+          <div className='lg:flex items-center justify-between box hover:scale-95 duration-300'>
           <div className='lg:flex items-center lg:gap-5'>
-            <img className='w-[7rem] h-[7rem] object-cover' 
-            src={item.images[0]} alt="" />
+            <img className='w-[7rem] h-[7rem] rounded-2xl object-cover' src={item.images[0]} alt="" />
          <div className="space-y-1 lg:space-y-5 lg:max-w-2xl">
            <p className="font-semibold text-xl">{item.name}</p>
            <p>₹{item.price}</p>

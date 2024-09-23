@@ -64,10 +64,10 @@ return (
             <CreateIcon />
           </IconButton>
         }
-                    title={"Menu"}
-                    sx={{ pt: 2, alignItems: "center" }}
+                    title={"All Menu"}
+                    sx={{ px: 4, alignItems: "center" }}
                 />
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{ px: 4, alignItems: "center" }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -83,7 +83,7 @@ return (
                         </TableHead>
                         <TableBody>
                             {menu.menuItems.map((item) => (
-                                <TableRow
+                                <TableRow className="hover:scale-95 duration-300"
                                     key={item.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
